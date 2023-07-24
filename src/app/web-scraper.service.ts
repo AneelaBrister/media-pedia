@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AxiosError } from 'axios';
 import axios from 'axios';
-import { Observable, from } from 'rxjs';
+import { EMPTY, Observable, from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,16 +10,21 @@ export class WebScraperService {
 
   constructor() { }
 
-  public fetchPage (url: string): Observable<string|undefined> {
+  public fetchPage2(url: string): Observable<string|void> {
+    return EMPTY;
+  }
+
+  public fetchPage (url: string): Observable<string|void> {
     console.log('url: ', url);
-    const header = {
-      "Access-Control-Allow-Origin": "*"
-    }
     const htmlData = axios
-        .get(url, {headers: header})
+        .get(url)
         .then(res => {
-          console.log('within promise', res.headers)
-          return res.data;
+          let dom = new DOMParser();
+          let docu = dom.parseFromString(res.data??'', 'text/html');
+          let ps:Array<any> = Array.from(docu.querySelectorAll('p'));
+          let texts: Array<string> = ps.map(p => p.innerText);
+          let text = texts.join('\n');
+          return text;
         })
         .catch((err: AxiosError) => {
             console.error('There was an error with ${err.config.url}');
