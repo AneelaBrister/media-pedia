@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject, EMPTY, Observable, flatMap, map, mergeMap, tap } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, flatMap, from, map, mergeMap, tap } from 'rxjs';
 import { WebScraperService } from './web-scraper.service';
 import { OpenAiService } from './open-ai.service';
+import { getCurrentTab } from '../background';
 
 
 @Component({
@@ -14,9 +15,16 @@ export class AppComponent {
 
   constructor(private _webScraper: WebScraperService, private _llm: OpenAiService) {}
 
-  url$: BehaviorSubject<string> = new BehaviorSubject('');
+  url$: BehaviorSubject<any> = new BehaviorSubject('');
   scraped$: Observable<string> = EMPTY;
-  
+
+
+  ngOnInit() {
+    getCurrentTab().then((tab) => {
+      this.url$.next((tab as any).url)
+      this.onGo(this.url$.value);
+    });
+  }
 
   onGo(url: string) {
     this.scraped$ = this._webScraper.fetchPage(url).pipe(

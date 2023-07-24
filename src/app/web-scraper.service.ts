@@ -10,10 +10,6 @@ export class WebScraperService {
 
   constructor() { }
 
-  public fetchPage2(url: string): Observable<string|void> {
-    return EMPTY;
-  }
-
   public fetchPage (url: string): Observable<string|void> {
     console.log('url: ', url);
     const htmlData = axios
@@ -27,7 +23,7 @@ export class WebScraperService {
           return text;
         })
         .catch((err: AxiosError) => {
-            console.error('There was an error with ${err.config.url}');
+            console.error('There was an error with ' + url);
             console.error(err.toJSON);
         })
 

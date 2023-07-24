@@ -1,6 +1,9 @@
-<textarea #url
+<!-- <textarea #url
   placeholder="Enter a website"
 >{{url$|async}}</textarea>
 
-<button (click)="onGo(url.value)">Go</button>
+<button (click)="onGo(url.value)">Go</button> -->
+
+<pre>{{(url$|async)|json}}</pre>
+
 <p>{{scraped$|async}}</p>
