@@ -19,8 +19,14 @@ export class WebScraperService {
           let docu = dom.parseFromString(res.data??'', 'text/html');
           let ps:Array<any> = Array.from(docu.querySelectorAll('p'));
           let texts: Array<string> = ps.map(p => p.innerText);
-          let text = texts.join('\n');
-          return text;
+          let reduced = texts.reduce((prev, curr) => {
+            if (prev.length >= 1500) return prev;
+            let val = prev += '\n' + curr;
+            return val;
+          }, '');
+
+          //let text = texts.join('\n');
+          return reduced;
         })
         .catch((err: AxiosError) => {
             console.error('There was an error with ' + url);

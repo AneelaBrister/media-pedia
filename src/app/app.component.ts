@@ -31,7 +31,7 @@ export class AppComponent {
       map((s: string|void) => s ? s : ''),
       tap(s => console.log('scraped text', s)),
       mergeMap((scraped: string) => {
-        return this._llm.doAPrompt(scraped.slice(0, 1500));
+        return this._llm.doAPrompt(scraped);
       }),
       tap(s => console.log('final', s))
     );
