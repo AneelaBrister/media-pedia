@@ -10,6 +10,6 @@ export function getCurrentTab(){
         console.log('All tabs in background', tabs);
         resolve(tabs[0]);
       });
-    }, 500);
+    }, 50);
   });
 }

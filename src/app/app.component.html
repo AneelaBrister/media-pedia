@@ -1,9 +1,11 @@
-<!-- <textarea #url
-  placeholder="Enter a website"
->{{url$|async}}</textarea>
 
-<button (click)="onGo(url.value)">Go</button> -->
+<div class="card" style="width: 25rem; font-family: 'Times New Roman', Times, serif; background-color:#51aaaa;">
 
-<pre>{{(url$|async)|json}}</pre>
+  <div class="card-body">
+    <!-- <pre>{{(url$|async)|json}}</pre> -->
+    <h5 class="card-title" style="font-weight: bolder; font-size: xx-large;">Media Pedia</h5>
+    <hr>
+    <p class="card-body" style="font-size: large; font-weight: bold;">{{scraped$|async}}</p>
+  </div>
 
-<p>{{scraped$|async}}</p>
+</div>
