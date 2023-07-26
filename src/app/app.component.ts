@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject, EMPTY, Observable, flatMap, from, map, mergeMap, tap } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, flatMap, from, map, mergeMap, of, startWith, tap } from 'rxjs';
 import { WebScraperService } from './web-scraper.service';
 import { OpenAiService } from './open-ai.service';
 import { getCurrentTab } from '../background';
@@ -22,18 +22,18 @@ export class AppComponent {
   ngOnInit() {
     getCurrentTab().then((tab) => {
       this.url$.next((tab as any).url)
-      this.onGo(this.url$.value);
+      this.mediapedia(this.url$.value);
     });
   }
 
-  onGo(url: string) {
+  mediapedia(url: string) {
     this.scraped$ = this._webScraper.fetchPage(url).pipe(
       map((s: string|void) => s ? s : ''),
       tap(s => console.log('scraped text', s)),
       mergeMap((scraped: string) => {
         return this._llm.doAPrompt(scraped);
       }),
-      tap(s => console.log('final', s))
+      tap(s => console.log('answer', s))
     );
 
   }
