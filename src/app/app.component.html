@@ -5,17 +5,29 @@
       <p class="card-title" style="font-weight: bolder; font-size: xx-large;">Media Pedia</p>
       <hr>
       <div *ngIf="(isChromeExt$|async)==false" class="form-group row">
-        <div class="col-10">
+        <div class="col-9">
           <input #url  (keydown.enter)="mediapedia(url.value)" class="form-control" placeholder="Enter a website" />
         </div>
         <div class="col-1">
           <button class="btn btn-primary" (click)="mediapedia(url.value)">Go</button>
         </div>
+        <div class="col-1">
+          <button class="btn btn-secondary" (click)="clear()">Clear</button>
+        </div>
         <div class="col-1 spinner-border" style="margin-top: 2px;" role="status" *ngIf="(thinking$|async)==true" >
           <span class="visually-hidden">Loading...</span>
         </div>
       </div>
-      <p class="card-body" style="font-size: large; font-weight: bold;">{{scraped$|async}}</p>
+      <div class="card-body" >
+        <div *ngIf="summary$|async" style="font-size: large; font-weight: bold;">Summary:</div>
+        <p>{{summary$|async}}</p>
+        <div *ngIf="clarity$|async" style="font-size: large; font-weight: bold;">Clarity:</div>
+        <p>{{clarity$|async}}</p>
+        <div *ngIf="objectivity$|async" style="font-size: large; font-weight: bold;">Objectivity:</div>
+        <p>{{objectivity$|async}}</p>
+        <div *ngIf="sophistication$|async" style="font-size: large; font-weight: bold;">Sophistication:</div>
+        <p>{{sophistication$|async}}</p>
+      </div>
       <div class="card-footer">
         <p style="margin-bottom: 0;"><strong>*Disclaimer:</strong></p>
         <p style="margin-bottom: 0.2rem;">Any resemblance to a fake company known as Jukt Micronics is purely intentional.</p>
