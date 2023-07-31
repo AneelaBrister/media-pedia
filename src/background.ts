@@ -1,4 +1,8 @@
 
+export function isChrome(): boolean {
+  return chrome && chrome.tabs ? true: false;
+}
+
 export function getCurrentTab(){
   return new Promise(function(resolve, reject){
     setTimeout(() => {

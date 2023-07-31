@@ -8,12 +8,17 @@ import { EMPTY, Observable, from } from 'rxjs';
 })
 export class WebScraperService {
 
-  constructor() { }
+  constructor() { 
+    // axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:3216';
+    // axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'POST, GET, HEAD, OPTIONS, PUT';
+    // // axios.defaults.headers.common['Access-Control-Allow-Credentials'] = 'true';
+    // axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization';
+  }
 
   public fetchPage (url: string): Observable<string|void> {
     console.log('url: ', url);
     const htmlData = axios
-        .get(url)
+        .get(url)     //, {withCredentials: true}
         .then(res => {
           let dom = new DOMParser();
           let docu = dom.parseFromString(res.data??'', 'text/html');
@@ -25,7 +30,6 @@ export class WebScraperService {
             return val;
           }, '');
 
-          //let text = texts.join('\n');
           return reduced;
         })
         .catch((err: AxiosError) => {
