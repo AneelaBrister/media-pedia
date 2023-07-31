@@ -4,7 +4,7 @@ const axios = require('axios');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 
-const _port = 3232;
+const _port = process.env.PORT || 3232;
 const _app_folder = 'dist/media-pedia';
 
 const app = express();
@@ -26,8 +26,8 @@ app.get('/fetch', async (req, res, next) => {
 });
 
 // ---- START UP THE NODE SERVER  ----
-app.listen(_port, function () {
-    console.log("Node Express server for " + app.name + " listening on http://localhost:" + _port);
+app.listen(_port, '0.0.0.0', function () {
+    console.log("Node Express server for " + app.name + " listening on 0.0.0.0:" + _port);
 });
 
 async function scrapePage(url) {

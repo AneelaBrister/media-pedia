@@ -1,1 +1,16 @@
 runtime: nodejs18
+
+env_variables: 
+  BUCKET_NAME: "media-pedia-bucket"
+
+handlers:
+- url: /fetch
+  secure: always
+  script: auto
+  
+- url: /
+  static_files: dist/media-pedia/index.html
+  upload: dist/media-pedia/index.html
+
+- url: /
+  static_dir: dist/media-pedia 
